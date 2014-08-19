@@ -1,11 +1,19 @@
 -- VISTA INFO TRÁMITES Y SERVICIOS
 CREATE VIEW v_info_ts
 AS
-SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.id_tramite_servicio, TS.descripcion AS descripcion_ts, CatEnte.descripcion AS ente, TS.tiempo_respuesta, TS.beneficiario, CatMat.id_cat_materia, CatMat.descripcion AS materia, TS.is_tramite, CatMat.tramite_servicio
+SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.id_tramite_servicio, TS.descripcion AS descripcion_ts, CatEnte.descripcion AS ente, TS.tiempo_respuesta, TS.beneficiario, CatMat.id_cat_materia, CatMat.descripcion AS materia, TS.is_tramite, CatMat.tramite_servicio, 100 AS costo_ts
 FROM cat_tramite_servicio CatTS 
 INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
 INNER JOIN cat_ente CatEnte ON CatEnte.id_cat_ente = TS.id_ente_responsable
 INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia
+
+-- VISTA NOMBRE TRÁMITES
+CREATE VIEW v_nombre_ts
+AS
+SELECT TS.id_tramite_servicio, CatTS.descripcion AS nombre_tramite
+FROM cat_tramite_servicio CatTS 
+INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
+ORDER BY TS.id_tramite_servicio
 
 -- VISTA REQUISITOS
 CREATE VIEW v_requisito_ts
