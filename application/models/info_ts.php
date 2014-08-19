@@ -21,7 +21,9 @@ class Info_ts extends CI_Model {
 		    	'tiempo_respuesta'	 		=> $row->tiempo_respuesta,
 		    	'beneficiario'	 			=> $row->beneficiario,
 		    	'materia'					=> $row->materia,
-		    	'tramite_servicio'    		=> $row->tramite_servicio
+		    	'tramite_servicio'    		=> $row->tramite_servicio, 
+		    	'costo'						=> $row->costo_ts, 
+		    	'is_tramite'				=> $row->is_tramite
 		    	);
 		}
 		return $res;
