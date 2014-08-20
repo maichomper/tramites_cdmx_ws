@@ -23,15 +23,32 @@ class Api extends REST_Controller
             $this->response(NULL, 404);
         }
     } // end info_tramite_get
-     
-    function tramites_get()
+    
+    function nombres_ts_get()
     {
         $this->load->model('info_ts');
-        $tramites = $this->info_ts->getTramitesServicios(1);
+ 
+        $nombres_ts = $this->info_ts->getNombreTS();
          
-        if($tramites)
+        if($nombres_ts)
         {
-            $this->response($tramites, 200);
+            $this->response($nombres_ts, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // end nombres_ts_get
+
+    function tramites_servicios_get()
+    {
+        $this->load->model('info_ts');
+        $tramites_servicios = $this->info_ts->getTramitesServicios();
+         
+        if($tramites_servicios)
+        {
+            $this->response($tramites_servicios, 200);
         }
  
         else
@@ -39,22 +56,6 @@ class Api extends REST_Controller
             $this->response(NULL, 404);
         }
     } // end tramite_get
-
-    function servicios_get()
-    {
-        $this->load->model('info_ts');
-        $servicios = $this->info_ts->getTramitesServicios(2);
-         
-        if($servicios)
-        {
-            $this->response($servicios, 200);
-        }
- 
-        else
-        {
-            $this->response(NULL, 404);
-        }
-    } // end servicios_get
 
     function requisitos_get()
     {
