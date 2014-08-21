@@ -24,4 +24,6 @@ class Consulta_materia extends CI_Model {
 		}
 		return $res;
 	}
+
+	
 }
