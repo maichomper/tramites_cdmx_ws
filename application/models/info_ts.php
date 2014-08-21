@@ -4,7 +4,7 @@ class Info_ts extends CI_Model {
 	public function __construct()
 	{
 		$this->load->database();
-	}
+	} // constructor
 
 	public function getInfoTramite($id){
 		$query = $this->db->get_where('v_info_ts', array('id_tramite_servicio' => $id));
@@ -16,18 +16,16 @@ class Info_ts extends CI_Model {
 		    	'id_cat_tramite_servicio' 	=> $row->id_cat_tramite_servicio,
 		    	'nombre_tramite' 			=> $row->nombre_tramite,
 		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
-		    	'descripcion_ts' 			=> $row->descripcion_ts,
 		    	'ente'	 					=> $row->ente,
 		    	'tiempo_respuesta'	 		=> $row->tiempo_respuesta,
 		    	'beneficiario'	 			=> $row->beneficiario,
 		    	'materia'					=> $row->materia,
 		    	'tramite_servicio'    		=> $row->tramite_servicio, 
-		    	'costo'						=> $row->costo_ts, 
 		    	'is_tramite'				=> $row->is_tramite
 		    	);
 		}
 		return $res;
-	}
+	} // getInfoTramites
 
 	public function getNombreTS(){
 		$query = $this->db->get('v_nombre_ts');
