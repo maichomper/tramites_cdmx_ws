@@ -16,6 +16,15 @@ INNER JOIN cat_tramite_servicio CatTS ON TS.id_cat_tramite_servicio = CatTS.id_c
 INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia
 ORDER BY tramite_servicio
 
+-- VISTA TRAMITE SERVICIO POR ENTE
+CREATE VIEW v_ts_ente
+AS
+SELECT TS.id_tramite_servicio, CatTS.descripcion AS tramite_servicio, id_cat_ente_norma, Ente.descripcion AS ente
+FROM cat_tramite_servicio CatTS
+INNER JOIN tramite_servicio TS ON CatTS.id_cat_tramite_servicio = TS.id_cat_tramite_servicio
+INNER JOIN cat_ente Ente ON Ente.id_cat_ente = CatTS.id_cat_ente_norma
+ORDER BY tramite_servicio
+
 -- VISTA NOMBRE TRÁMITES
 CREATE VIEW v_nombre_ts
 AS

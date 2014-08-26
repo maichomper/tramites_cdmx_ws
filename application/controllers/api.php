@@ -193,6 +193,42 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // documento_get
+    } // ts_tema_get
+
+    function ts_institucion_get(){
+        $this->load->model('ts_ente');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $ts_institucion = $this->ts_ente->getEnteTS( $this->get('id') );
+         
+        if($ts_institucion)
+        {
+            $this->response($ts_institucion, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // ts_tema_get
+
+    function instituciones_get(){
+        $this->load->model('entes');
+ 
+        $entes = $this->entes->getEntes();
+         
+        if($entes)
+        {
+            $this->response($entes, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // instituciones_get
 } // class Api
 ?>
