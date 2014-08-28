@@ -43,8 +43,13 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'reg_cdmx';
+
 $db['default']['password'] = '';
 $db['default']['database'] = 'reg_cdmx_prod';
+
+// $db['default']['password'] = 'reg_cdmx123';
+// $db['default']['database'] = 'reg_cdmx_nueva';
+
 $db['default']['dbdriver'] = 'postgre';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

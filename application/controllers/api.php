@@ -22,7 +22,7 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // end info_tramite_get
+    } // info_tramite_get
     
     function nombres_ts_get()
     {
@@ -39,7 +39,7 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // end nombres_ts_get
+    } // nombres_ts_get
 
     function tramites_servicios_get()
     {
@@ -55,7 +55,7 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // end tramite_get
+    } // tramite_get
 
     function requisitos_get()
     {
@@ -76,7 +76,7 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // end requisitos_get
+    } // requisitos_get
 
     function requisitos_esp_get()
     {
@@ -97,7 +97,7 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // end requisitos_esp_get
+    } // requisitos_esp_get
 
     function formatos_get(){
         $this->load->model('formato_ts');
@@ -117,7 +117,7 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // end formatos_get
+    } // formatos_get
 
     function area_atencion_get(){
         $this->load->model('area_atencion');
@@ -137,7 +137,7 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // end area_atencion_get
+    } // area_atencion_get
 
     function documento_get(){
         $this->load->model('documento');
@@ -157,6 +157,78 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // end area_atencion_get
-} // end class Api
+    } // documento_get
+
+    function temas_get(){
+        $this->load->model('materias');
+ 
+        $materias = $this->materias->getMaterias();
+         
+        if($materias)
+        {
+            $this->response($materias, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // documento_get
+
+    function ts_tema_get(){
+        $this->load->model('ts_materia');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $ts_tema = $this->ts_materia->getTemaTS( $this->get('id') );
+         
+        if($ts_tema)
+        {
+            $this->response($ts_tema, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // ts_tema_get
+
+    function ts_institucion_get(){
+        $this->load->model('ts_ente');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $ts_institucion = $this->ts_ente->getEnteTS( $this->get('id') );
+         
+        if($ts_institucion)
+        {
+            $this->response($ts_institucion, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // ts_tema_get
+
+    function instituciones_get(){
+        $this->load->model('entes');
+ 
+        $entes = $this->entes->getEntes();
+         
+        if($entes)
+        {
+            $this->response($entes, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // instituciones_get
+} // class Api
 ?>
