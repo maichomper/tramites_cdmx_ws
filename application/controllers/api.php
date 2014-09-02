@@ -251,5 +251,25 @@ class Api extends REST_Controller
         }
     } // costo_get
 
+    function procedimiento_get(){
+        $this->load->model('procedimiento');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $procedimiento = $this->procedimiento->getProcedimiento( $this->get('id') );
+         
+        if($procedimiento)
+        {
+            $this->response($procedimiento, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // procedimiento_get
+
 } // class Api
 ?>
