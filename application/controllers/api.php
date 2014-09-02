@@ -213,7 +213,7 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // ts_tema_get
+    } // ts_institucion_get
 
     function instituciones_get(){
         $this->load->model('entes');
@@ -230,5 +230,26 @@ class Api extends REST_Controller
             $this->response(NULL, 404);
         }
     } // instituciones_get
+
+    function costo_get(){
+        $this->load->model('costo');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $costo = $this->costo->getCosto( $this->get('id') );
+         
+        if($costo)
+        {
+            $this->response($costo, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // costo_get
+
 } // class Api
 ?>
