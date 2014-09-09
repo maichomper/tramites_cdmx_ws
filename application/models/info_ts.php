@@ -15,6 +15,7 @@ class Info_ts extends CI_Model {
 		    $res = array(
 		    	'id_cat_tramite_servicio' 	=> $row->id_cat_tramite_servicio,
 		    	'nombre_tramite' 			=> $row->nombre_tramite,
+		    	'descripcion' 				=> $row->descripcion_ts,
 		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
 		    	'ente'	 					=> $row->ente,
 		    	'tiempo_respuesta'	 		=> $row->tiempo_respuesta,
