@@ -16,6 +16,7 @@ class Procedimiento extends CI_Model {
 		    	'id_tramite_servicio' 	=> $row->id_tramite_servicio,
 		    	'paso' 					=> $row->paso,
 		    	'accion' 				=> $row->accion,
+		    	'actor' 				=> $row->id_actor
 		    	);
 		}
 		return $res;
