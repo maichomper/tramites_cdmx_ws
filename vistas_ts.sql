@@ -1,11 +1,11 @@
 -- VISTA INFO TRÁMITES Y SERVICIOS
 CREATE VIEW v_info_ts
 AS
-SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.id_tramite_servicio, CatEnte.descripcion AS ente, TS.tiempo_respuesta, TS.beneficiario, CatMat.id_cat_materia, CatMat.descripcion AS materia, TS.is_tramite, CatMat.tramite_servicio
+SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.descripcion AS descripcion_ts, TS.id_tramite_servicio, CatEnte.descripcion AS ente, TS.tiempo_respuesta, TS.beneficiario, CatMat.id_cat_materia, CatMat.descripcion AS materia, TS.is_tramite, CatMat.tramite_servicio
 FROM cat_tramite_servicio CatTS 
 INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
 INNER JOIN cat_ente CatEnte ON CatEnte.id_cat_ente = TS.id_ente_responsable
-INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia
+INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia;
 
 -- VISTA TRAMITE SERVICIO POR MATERIA
 CREATE VIEW v_ts_materia
@@ -14,7 +14,7 @@ SELECT id_tramite_servicio, CatTS.id_cat_materia, CatTS.descripcion AS tramite_s
 FROM tramite_servicio TS 
 INNER JOIN cat_tramite_servicio CatTS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
 INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia
-ORDER BY tramite_servicio
+ORDER BY tramite_servicio;
 
 -- VISTA TRAMITE SERVICIO POR ENTE
 CREATE VIEW v_ts_ente
@@ -23,7 +23,7 @@ SELECT TS.id_tramite_servicio, CatTS.descripcion AS tramite_servicio, id_cat_ent
 FROM cat_tramite_servicio CatTS
 INNER JOIN tramite_servicio TS ON CatTS.id_cat_tramite_servicio = TS.id_cat_tramite_servicio
 INNER JOIN cat_ente Ente ON Ente.id_cat_ente = CatTS.id_cat_ente_norma
-ORDER BY tramite_servicio
+ORDER BY tramite_servicio;
 
 -- VISTA NOMBRE TRÁMITES
 CREATE VIEW v_nombre_ts
@@ -31,7 +31,7 @@ AS
 SELECT TS.id_tramite_servicio, CatTS.descripcion AS nombre_tramite
 FROM cat_tramite_servicio CatTS 
 INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
-ORDER BY TS.id_tramite_servicio
+ORDER BY TS.id_tramite_servicio;
 
 -- VISTA REQUISITOS
 CREATE VIEW v_requisito_ts
@@ -41,7 +41,7 @@ FROM requisito_ts ReqTS
 INNER JOIN cat_requisito CatReq ON CatReq.id_cat_requisito = ReqTS.id_cat_requisito
 INNER JOIN cat_categoria_requisito CatCatReq ON CatCatReq.id_cat_categoria_requisito = CatReq.categoria
 WHERE eliminado = 1 AND CatReq.descripcion <> 'No se requiere'
-ORDER BY id_tramite_servicio, categoria 
+ORDER BY id_tramite_servicio, categoria; 
 
 -- VISTA REQUISITOS ESPECÍFICOS
 CREATE VIEW v_requisito_esp_ts
@@ -49,14 +49,14 @@ AS
 SELECT id_requisito_especifico_ts, ReqEspTS.descripcion AS requisito_especifico, TS.id_tramite_servicio
 FROM requisito_especifico_ts ReqEspTS
 INNER JOIN tramite_servicio TS ON TS.id_tramite_servicio = ReqEspTS.id_tramite_servicio
-WHERE eliminado = 1
+WHERE eliminado = 1;
 
 -- VISTA DOCUMENTOS
 CREATE VIEW v_documento_ts
 AS
 SELECT CatDoc.id_cat_documento, id_documento_ts, id_tramite_servicio, descripcion, vigencia FROM 
 cat_documento CatDoc 
-INNER JOIN documento_ts Doc ON CatDoc.id_cat_documento = Doc.id_cat_documento
+INNER JOIN documento_ts Doc ON CatDoc.id_cat_documento = Doc.id_cat_documento;
 
 -- VISTA AREAS DE ATENCIÓN
 CREATE VIEW v_areas_atencion
@@ -66,7 +66,7 @@ FROM tramite_servicio TS
 INNER JOIN area_atencion_ts AreaAte ON AreaAte.id_tramite_servicio = TS.id_tramite_servicio
 INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = AreaAte.id_delegacion
 INNER JOIN cat_colonias_cp Col ON Col.id_colonia = AreaAte.id_colonia 
-WHERE eliminado = 1
+WHERE eliminado = 1;
 
 -- FORMATOS (no se usa vista para WS)
 SELECT id_formato, id_tramite_servicio, nombre, url FROM formato_ts
