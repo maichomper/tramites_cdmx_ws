@@ -42,6 +42,21 @@ class Info_ts extends CI_Model {
 		return $res;
 	}
 
+	public function getNombreTSComunes($id_ts){
+		$this->db->where_in('id_tramite_servicio', $id_ts);
+		$query = $this->db->get('v_nombre_ts');
+		$res = array();
+
+		foreach ($query->result() as $key=>$row)
+		{
+		    $res[$key] = array(
+		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
+		    	'nombre_ts' 				=> $row->nombre_tramite,
+		    	);
+		}
+		return $res;
+	}
+
 	public function getTramitesServicios(){
 		$this->db->select('*');
 		$this->db->from('v_info_ts');

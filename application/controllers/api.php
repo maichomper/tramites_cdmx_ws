@@ -41,6 +41,34 @@ class Api extends REST_Controller
         }
     } // nombres_ts_get
 
+    function nombres_ts_comunes_get()
+    {
+        $this->load->model('info_ts');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $id_str = explode('-', $this->get('id'));
+        $id_array = [];
+        foreach ($id_str as $value) {
+            array_push($id_array, $value);
+        }
+
+        //$id = array(46, 47);
+        $nombres_ts = $this->info_ts->getNombreTSComunes( $id_array );
+         
+        if($nombres_ts)
+        {
+            $this->response($nombres_ts, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // nombres_ts_get
+
     function tramites_servicios_get()
     {
         $this->load->model('info_ts');
