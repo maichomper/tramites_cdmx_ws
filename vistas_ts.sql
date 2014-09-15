@@ -5,7 +5,8 @@ SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.de
 FROM cat_tramite_servicio CatTS 
 INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
 INNER JOIN cat_ente CatEnte ON CatEnte.id_cat_ente = TS.id_ente_responsable
-INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia;
+INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia
+WHERE id_cat_estatus = 16;
 
 -- VISTA TRAMITE SERVICIO POR MATERIA
 CREATE VIEW v_ts_materia
@@ -14,6 +15,7 @@ SELECT id_tramite_servicio, CatTS.id_cat_materia, CatTS.descripcion AS tramite_s
 FROM tramite_servicio TS 
 INNER JOIN cat_tramite_servicio CatTS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
 INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia
+WHERE id_cat_estatus = 16
 ORDER BY tramite_servicio;
 
 -- VISTA TRAMITE SERVICIO POR ENTE
@@ -23,6 +25,7 @@ SELECT TS.id_tramite_servicio, CatTS.descripcion AS tramite_servicio, id_cat_ent
 FROM cat_tramite_servicio CatTS
 INNER JOIN tramite_servicio TS ON CatTS.id_cat_tramite_servicio = TS.id_cat_tramite_servicio
 INNER JOIN cat_ente Ente ON Ente.id_cat_ente = CatTS.id_cat_ente_norma
+WHERE id_cat_estatus = 16
 ORDER BY tramite_servicio;
 
 -- VISTA NOMBRE TRÁMITES
@@ -31,6 +34,7 @@ AS
 SELECT TS.id_tramite_servicio, CatTS.descripcion AS nombre_tramite
 FROM cat_tramite_servicio CatTS 
 INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
+WHERE id_cat_estatus = 16
 ORDER BY TS.id_tramite_servicio;
 
 -- VISTA REQUISITOS
@@ -49,7 +53,8 @@ AS
 SELECT id_requisito_especifico_ts, ReqEspTS.descripcion AS requisito_especifico, TS.id_tramite_servicio
 FROM requisito_especifico_ts ReqEspTS
 INNER JOIN tramite_servicio TS ON TS.id_tramite_servicio = ReqEspTS.id_tramite_servicio
-WHERE eliminado = 1;
+WHERE eliminado = 1
+AND id_cat_estatus = 16;
 
 -- VISTA DOCUMENTOS
 CREATE VIEW v_documento_ts
@@ -66,7 +71,8 @@ FROM tramite_servicio TS
 INNER JOIN area_atencion_ts AreaAte ON AreaAte.id_tramite_servicio = TS.id_tramite_servicio
 INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = AreaAte.id_delegacion
 INNER JOIN cat_colonias_cp Col ON Col.id_colonia = AreaAte.id_colonia 
-WHERE eliminado = 1;
+WHERE eliminado = 1
+AND id_cat_estatus = 16;
 
 -- FORMATOS (no se usa vista para WS)
 SELECT id_formato, id_tramite_servicio, nombre, url FROM formato_ts

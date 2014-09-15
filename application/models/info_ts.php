@@ -69,7 +69,7 @@ class Info_ts extends CI_Model {
 		foreach ($query->result() as $key=>$row)
 		{
 		    $res[$key] = array(
-		    	'id_cat_tramite_servicio' 	=> $row->id_cat_tramite_servicio,
+		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
 		    	'nombre_ts' 				=> $row->nombre_tramite,
 		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
 		    	'tramite_servicio'    		=> $row->tramite_servicio
