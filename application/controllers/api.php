@@ -55,7 +55,6 @@ class Api extends REST_Controller
             array_push($id_array, $value);
         }
 
-        //$id = array(46, 47);
         $nombres_ts = $this->info_ts->getNombreTSComunes( $id_array );
          
         if($nombres_ts)
