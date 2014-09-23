@@ -20,9 +20,14 @@ class Info_ts extends CI_Model {
 		    	'ente'	 					=> $row->ente,
 		    	'tiempo_respuesta'	 		=> $row->tiempo_respuesta,
 		    	'beneficiario'	 			=> $row->beneficiario,
+		    	'id_materia'				=> $row->id_cat_materia,
 		    	'materia'					=> $row->materia,
 		    	'tramite_servicio'    		=> $row->tramite_servicio, 
-		    	'is_tramite'				=> $row->is_tramite
+		    	'is_tramite'				=> $row->is_tramite,
+		    	'url_nvl_automatizacion' 	=> $row->url_nvl_automatizacion,
+		    	'nvl_automatizacion' 		=> $row->nvl_automatizacion,
+		    	'formasolicitud' 			=> $row->formasolicitud,
+		    	'tel_presentacion' 			=> $row->tel_presentacion,
 		    	);
 		}
 		return $res;
@@ -90,6 +95,7 @@ class Info_ts extends CI_Model {
 		    	'id_tramite_servicio'	 	=> $row->id_tramite_servicio,
 		    	'documento_oficial' 		=> $row->documento_oficial,
 		    	'documento_acreditacion' 	=> $row->documento_acreditacion,
+		    	'conjuncion'	 			=> $row->conjuncion,
 		    	);
 		}
 		return $res;

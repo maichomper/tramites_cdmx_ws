@@ -50,7 +50,7 @@ class Api extends REST_Controller
         }
  
         $id_str = explode('-', $this->get('id'));
-        $id_array = [];
+        $id_array = array();
         foreach ($id_str as $value) {
             array_push($id_array, $value);
         }
@@ -166,6 +166,26 @@ class Api extends REST_Controller
         }
     } // area_atencion_get
 
+    function oficinas_get(){
+        $this->load->model('area_atencion');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $area_atencion = $this->area_atencion->getOficinas( $this->get('id') );
+         
+        if($area_atencion)
+        {
+            $this->response($area_atencion, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // area_atencion_get
+
     function documento_get(){
         $this->load->model('documento');
         if(!$this->get('id'))
@@ -242,10 +262,31 @@ class Api extends REST_Controller
         }
     } // ts_institucion_get
 
+    function institucion_get(){
+        $this->load->model('ts_ente');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $ts_institucion = $this->ts_ente->getEnte( $this->get('id') );
+         
+        if($ts_institucion)
+        {
+            $this->response($ts_institucion, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // ts_institucion_get
+
+
     function instituciones_get(){
         $this->load->model('entes');
  
-        $entes = $this->entes->getEntes();
+        $entes = $this->entes->getEntesPadre();
          
         if($entes)
         {

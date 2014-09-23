@@ -21,4 +21,18 @@ class Ts_ente extends CI_Model {
 		}
 		return $res;
 	}
+
+	public function getEnte($id){
+		$query = $this->db->get_where('cat_ente', array('id_cat_ente' => $id));
+		$res = array();
+
+		foreach ($query->result() as $row)
+		{
+		    $res = array(
+		    	'id_cat_ente' => $row->id_cat_ente,
+		    	'institucion' => $row->descripcion,
+		    	);
+		}
+		return $res;
+	}
 }// class Materias
