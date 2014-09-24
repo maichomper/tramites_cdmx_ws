@@ -6,7 +6,8 @@ class Entes extends CI_Model {
 		$this->load->database();
 	}
 
-	public function getEntes(){
+	public function getEntesPadre(){
+		$this->db->where('ente_padre', '0');
 		$this->db->order_by('descripcion');
 		$query = $this->db->get('cat_ente');
 
@@ -21,4 +22,5 @@ class Entes extends CI_Model {
 		}
 		return $res;
 	}
+
 }// class Entes

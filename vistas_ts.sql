@@ -1,7 +1,7 @@
 -- VISTA INFO TRÁMITES Y SERVICIOS
 CREATE VIEW v_info_ts
 AS
-SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.descripcion AS descripcion_ts, TS.id_tramite_servicio, CatEnte.descripcion AS ente, TS.tiempo_respuesta, TS.beneficiario, CatMat.id_cat_materia, CatMat.descripcion AS materia, TS.is_tramite, CatMat.tramite_servicio
+SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.descripcion AS descripcion_ts, TS.id_tramite_servicio, CatEnte.descripcion AS ente, TS.tiempo_respuesta, TS.beneficiario, CatMat.id_cat_materia, CatMat.descripcion AS materia, TS.is_tramite, CatMat.tramite_servicio, url_nvl_automatizacion, nvl_automatizacion, formasolicitud, tel_presentacion
 FROM cat_tramite_servicio CatTS 
 INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
 INNER JOIN cat_ente CatEnte ON CatEnte.id_cat_ente = TS.id_ente_responsable
@@ -21,7 +21,7 @@ ORDER BY tramite_servicio;
 -- VISTA TRAMITE SERVICIO POR ENTE
 CREATE VIEW v_ts_ente
 AS
-SELECT TS.id_tramite_servicio, CatTS.descripcion AS tramite_servicio, id_cat_ente_norma, Ente.descripcion AS ente
+SELECT TS.id_tramite_servicio, CatTS.descripcion AS tramite_servicio, id_cat_ente_norma, Ente.descripcion AS ente, ente_padre
 FROM cat_tramite_servicio CatTS
 INNER JOIN tramite_servicio TS ON CatTS.id_cat_tramite_servicio = TS.id_cat_tramite_servicio
 INNER JOIN cat_ente Ente ON Ente.id_cat_ente = CatTS.id_cat_ente_norma
@@ -40,7 +40,7 @@ ORDER BY TS.id_tramite_servicio;
 -- VISTA REQUISITOS
 CREATE VIEW v_requisito_ts
 AS
-SELECT ReqTS.id_requisito_ts, CatReq.id_cat_requisito, id_tramite_servicio, CatCatReq.descripcion AS documento_oficial, CatReq.descripcion AS documento_acreditacion
+SELECT ReqTS.id_requisito_ts, CatReq.id_cat_requisito, id_tramite_servicio, CatCatReq.descripcion AS documento_oficial, CatReq.descripcion AS documento_acreditacion, conjuncion
 FROM requisito_ts ReqTS 
 INNER JOIN cat_requisito CatReq ON CatReq.id_cat_requisito = ReqTS.id_cat_requisito
 INNER JOIN cat_categoria_requisito CatCatReq ON CatCatReq.id_cat_categoria_requisito = CatReq.categoria
@@ -66,13 +66,11 @@ INNER JOIN documento_ts Doc ON CatDoc.id_cat_documento = Doc.id_cat_documento;
 -- VISTA AREAS DE ATENCIÓN
 CREATE VIEW v_areas_atencion
 AS
-SELECT TS.id_tramite_servicio, nombre, calle_numero, Del.descripcion AS delegacion, Col.colonia AS colonia, cp, telefonos, url_ubicacion 
-FROM tramite_servicio TS
-INNER JOIN area_atencion_ts AreaAte ON AreaAte.id_tramite_servicio = TS.id_tramite_servicio
-INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = AreaAte.id_delegacion
-INNER JOIN cat_colonias_cp Col ON Col.id_colonia = AreaAte.id_colonia 
-WHERE eliminado = 1
-AND id_cat_estatus = 16;
+SELECT id_tramite_servicio, id_cat_ente, nombre, calle_numero,Del.descripcion AS delegacion, Col.colonia AS colonia, cp, telefono_1, ext_1, telefono_2, ext_2, url_ubicacion  
+FROM tramite_area_atencion
+INNER JOIN area_atencion_ts ON area_atencion_ts.id_area_atencion_ts=tramite_area_atencion.id_area_atencion_ts
+INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = area_atencion_ts.id_delegacion
+INNER JOIN cat_colonias_cp Col ON Col.id_colonia = area_atencion_ts.id_colonia;
 
 -- FORMATOS (no se usa vista para WS)
 SELECT id_formato, id_tramite_servicio, nombre, url FROM formato_ts
