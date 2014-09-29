@@ -6,6 +6,11 @@ class Info_ts extends CI_Model {
 		$this->load->database();
 	} // constructor
 
+	/**
+	 * Descripción: Regresa información de trámite/servicio
+	 * @param integer $id
+	 * @return mixed array $res
+	 */
 	public function getInfoTramite($id){
 		$query = $this->db->get_where('v_info_ts', array('id_tramite_servicio' => $id));
 		$res = array();
@@ -33,6 +38,11 @@ class Info_ts extends CI_Model {
 		return $res;
 	} // getInfoTramites
 
+	/**
+	 * Descripción: Regresa nombres de trámite y servicios
+	 * @param 
+	 * @return mixed array $res
+	 */
 	public function getNombreTS(){
 		$query = $this->db->get('v_nombre_ts');
 		$res = array();
@@ -45,8 +55,13 @@ class Info_ts extends CI_Model {
 		    	);
 		}
 		return $res;
-	}
+	}// getNombreTS
 
+	/**
+	 * Descripción: Regresa información de trámite/servicio mas comunes
+	 * @param integer $id_ts
+	 * @return mixed array $res
+	 */
 	public function getNombreTSComunes($id_ts){
 		$this->db->where_in('id_tramite_servicio', $id_ts);
 		$query = $this->db->get('v_nombre_ts');
@@ -60,29 +75,13 @@ class Info_ts extends CI_Model {
 		    	);
 		}
 		return $res;
-	}
+	}// getNombreTSComunes
 
-	public function getTramitesServicios(){
-		$this->db->select('*');
-		$this->db->from('v_info_ts');
-		$this->db->limit(15);
-		$this->db->order_by('tramite_servicio', 'asc');
-		$query = $this->db->get();
-
-		$res = array();
-
-		foreach ($query->result() as $key=>$row)
-		{
-		    $res[$key] = array(
-		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
-		    	'nombre_ts' 				=> $row->nombre_tramite,
-		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
-		    	'tramite_servicio'    		=> $row->tramite_servicio
-		    	);
-		}
-		return $res;
-	}
-
+	/**
+	 * Descripción: Regresa requisitos de un trámite/servicio
+	 * @param integer $id
+	 * @return mixed array $res
+	 */
 	public function getRequisitos($id){
 		$query = $this->db->get_where('v_requisito_ts', array('id_tramite_servicio' => $id));
 		$res = array();
@@ -99,8 +98,13 @@ class Info_ts extends CI_Model {
 		    	);
 		}
 		return $res;
-	}
+	}// getRequisitos
 
+	/**
+	 * Descripción: Regresa requisitos específicos de un trámite/servicio
+	 * @param integer $id
+	 * @return mixed array $res
+	 */
 	public function getRequisitosEsp($id){
 		$query = $this->db->get_where('v_requisito_esp_ts', array('id_tramite_servicio' => $id));
 		$res = array();
@@ -114,5 +118,26 @@ class Info_ts extends CI_Model {
 		    	);
 		}
 		return $res;
-	}
+	}// getRequisitosEsp
+
+	/**
+	 * Descripción: Regresa los trámites/servicios que se pueden realizar en línea.
+	 * @param 
+	 * @return mixed array $res
+	 */
+	public function getTSEnLinea(){
+		$this->db->where("nvl_automatizacion <> '1'");
+		$this->db->where('nvl_automatizacion IS NOT NULL');
+		$query = $this->db->get('v_info_ts');
+		$res = array();
+
+		foreach ($query->result() as $key=>$row)
+		{
+		    $res[$key] = array(
+		    	'nombre_tramite' 			=> $row->nombre_tramite,
+		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio
+		    	);
+		}
+		return $res;
+	}// getRequisitosEsp
 }
