@@ -3,6 +3,11 @@ require(APPPATH.'/libraries/REST_Controller.php');
  
 class Api extends REST_Controller
 {
+    /**
+     * Descripción: Regresa información de trámite/servicio
+     * @param 
+     * @return 
+     */
     function info_tramite_get()
     {
         $this->load->model('info_ts');
@@ -24,6 +29,11 @@ class Api extends REST_Controller
         }
     } // info_tramite_get
     
+    /**
+     * Descripción: Regresa nombres de trámites/servicios
+     * @param 
+     * @return 
+     */
     function nombres_ts_get()
     {
         $this->load->model('info_ts');
@@ -41,6 +51,33 @@ class Api extends REST_Controller
         }
     } // nombres_ts_get
 
+    /**
+     * Descripción: Regresa trámites/servicios que se pueden realizar en línea
+     * @param 
+     * @return 
+     */
+    function ts_en_linea_get()
+    {
+        $this->load->model('info_ts');
+ 
+        $ts_en_linea = $this->info_ts->getTSEnLinea();
+         
+        if($ts_en_linea)
+        {
+            $this->response($ts_en_linea, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // ts_en_linea_get
+
+    /**
+     * Descripción: Regresa nombres de trámites/servicios mas comunes
+     * @param 
+     * @return 
+     */
     function nombres_ts_comunes_get()
     {
         $this->load->model('info_ts');
