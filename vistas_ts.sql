@@ -40,7 +40,7 @@ ORDER BY TS.id_tramite_servicio;
 -- VISTA REQUISITOS
 CREATE VIEW v_requisito_ts
 AS
-SELECT ReqTS.id_requisito_ts, CatReq.id_cat_requisito, id_tramite_servicio, CatCatReq.descripcion AS documento_oficial, CatReq.descripcion AS documento_acreditacion, conjuncion
+SELECT ReqTS.id_requisito_ts, CatReq.id_cat_requisito, id_tramite_servicio, CatCatReq.descripcion AS documento_oficial, CatReq.descripcion AS documento_acreditacion, conjuncion, original_copia, num_copias
 FROM requisito_ts ReqTS 
 INNER JOIN cat_requisito CatReq ON CatReq.id_cat_requisito = ReqTS.id_cat_requisito
 INNER JOIN cat_categoria_requisito CatCatReq ON CatCatReq.id_cat_categoria_requisito = CatReq.categoria
@@ -72,11 +72,4 @@ INNER JOIN area_atencion_ts ON area_atencion_ts.id_area_atencion_ts=tramite_area
 INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = area_atencion_ts.id_delegacion
 INNER JOIN cat_colonias_cp Col ON Col.id_colonia = area_atencion_ts.id_colonia;
 
--- FORMATOS (no se usa vista para WS)
-SELECT id_formato, id_tramite_servicio, nombre, url FROM formato_ts
-WHERE eliminado = 1 
-
--- MATERIAS (no se usa vista para WS)
-SELECT id_cat_materia, descripcion 
-FROM cat_materia CatMat 
 

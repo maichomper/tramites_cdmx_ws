@@ -95,6 +95,8 @@ class Info_ts extends CI_Model {
 		    	'documento_oficial' 		=> $row->documento_oficial,
 		    	'documento_acreditacion' 	=> $row->documento_acreditacion,
 		    	'conjuncion'	 			=> $row->conjuncion,
+		    	'num_copias'				=> $row->num_copias,
+		    	'original_copia'			=> $row->original_copia
 		    	);
 		}
 		return $res;

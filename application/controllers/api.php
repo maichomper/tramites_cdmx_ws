@@ -52,28 +52,6 @@ class Api extends REST_Controller
     } // nombres_ts_get
 
     /**
-     * Descripción: Regresa trámites/servicios que se pueden realizar en línea
-     * @param 
-     * @return 
-     */
-    function ts_en_linea_get()
-    {
-        $this->load->model('info_ts');
- 
-        $ts_en_linea = $this->info_ts->getTSEnLinea();
-         
-        if($ts_en_linea)
-        {
-            $this->response($ts_en_linea, 200); // 200 being the HTTP response code
-        }
- 
-        else
-        {
-            $this->response(NULL, 404);
-        }
-    } // ts_en_linea_get
-
-    /**
      * Descripción: Regresa nombres de trámites/servicios mas comunes
      * @param 
      * @return 
@@ -103,24 +81,35 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // nombres_ts_get
+    } // nombres_ts_comunes_get
 
-    function tramites_servicios_get()
+    /**
+     * Descripción: Regresa trámites/servicios que se pueden realizar en línea
+     * @param 
+     * @return 
+     */
+    function ts_en_linea_get()
     {
         $this->load->model('info_ts');
-        $tramites_servicios = $this->info_ts->getTramitesServicios();
+ 
+        $ts_en_linea = $this->info_ts->getTSEnLinea();
          
-        if($tramites_servicios)
+        if($ts_en_linea)
         {
-            $this->response($tramites_servicios, 200);
+            $this->response($ts_en_linea, 200); // 200 being the HTTP response code
         }
  
         else
         {
             $this->response(NULL, 404);
         }
-    } // tramite_get
+    } // ts_en_linea_get
 
+    /**
+     * Descripción: Regresa requisitos generales de trámites/servicios 
+     * @param 
+     * @return 
+     */
     function requisitos_get()
     {
         $this->load->model('info_ts');
@@ -142,6 +131,11 @@ class Api extends REST_Controller
         }
     } // requisitos_get
 
+    /**
+     * Descripción: Regresa requisitos especificos de trámites/servicios 
+     * @param 
+     * @return 
+     */
     function requisitos_esp_get()
     {
         $this->load->model('info_ts');
@@ -162,7 +156,12 @@ class Api extends REST_Controller
             $this->response(NULL, 404);
         }
     } // requisitos_esp_get
-
+    
+    /**
+     * Descripción: Regresa formatos de un trámite/servicio 
+     * @param 
+     * @return 
+     */
     function formatos_get(){
         $this->load->model('formato_ts');
         if(!$this->get('id'))
@@ -176,13 +175,17 @@ class Api extends REST_Controller
         {
             $this->response($formato, 200); // 200 being the HTTP response code
         }
- 
         else
         {
             $this->response(NULL, 404);
         }
     } // formatos_get
 
+    /**
+     * Descripción: Regresa formatos de un trámite/servicio 
+     * @param 
+     * @return 
+     */
     function area_atencion_get(){
         $this->load->model('area_atencion');
         if(!$this->get('id'))
@@ -375,6 +378,32 @@ class Api extends REST_Controller
             $this->response(NULL, 404);
         }
     } // procedimiento_get
+
+    /**
+     * Descripción: Regresa áreas de pago para un trámite/servcio
+     * @param 
+     * @return 
+     */
+    function area_pago_get()
+    {
+        $this->load->model('area_pago');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $area_pago = $this->area_pago->getAreaPago( $this->get('id') );
+         
+        if($area_pago)
+        {
+            $this->response($area_pago, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // area_pago_get
 
 } // class Api
 ?>
