@@ -405,5 +405,31 @@ class Api extends REST_Controller
         }
     } // area_pago_get
 
+    /**
+     * Descripción: Regresa áreas de pago para un trámite/servcio
+     * @param 
+     * @return 
+     */
+    function info_juridica_get()
+    {
+        $this->load->model('info_juridica');
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+ 
+        $info_juridica = $this->info_juridica->getInfoJuridica( $this->get('id') );
+         
+        if($info_juridica)
+        {
+            $this->response($info_juridica, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // info_juridica_get
+
 } // class Api
 ?>

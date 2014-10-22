@@ -33,6 +33,10 @@ class Info_ts extends CI_Model {
 		    	'nvl_automatizacion' 		=> $row->nvl_automatizacion,
 		    	'formasolicitud' 			=> $row->formasolicitud,
 		    	'tel_presentacion' 			=> $row->tel_presentacion,
+		    	'observaciones' 			=> $row->observaciones,
+		    	'beneficiario'	 			=> $row->beneficiario,	
+		    	'negativa_ficta'	 		=> $row->negativa_ficta,	
+		    	'afirmativa_ficta'	 		=> $row->afirmativa_ficta
 		    	);
 		}
 		return $res;
