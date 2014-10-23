@@ -7,6 +7,7 @@ class Materias extends CI_Model {
 	}
 
 	public function getMaterias(){
+		$this->db->order_by('descripcion');
 		$query = $this->db->get('cat_materia');
 		$res = array();
 

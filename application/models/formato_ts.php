@@ -7,7 +7,9 @@ class Formato_ts extends CI_Model {
 	}
 
 	public function getFormato($id){
-		$query = $this->db->get_where('formato_ts', array('id_tramite_servicio' => $id));
+		$this->db->where('eliminado', '1');
+		$this->db->where('id_tramite_servicio', $id);
+		$query = $this->db->get('formato_ts');
 		$res = array();
 
 		foreach ($query->result() as $key=>$row)

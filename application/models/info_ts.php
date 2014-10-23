@@ -33,6 +33,10 @@ class Info_ts extends CI_Model {
 		    	'nvl_automatizacion' 		=> $row->nvl_automatizacion,
 		    	'formasolicitud' 			=> $row->formasolicitud,
 		    	'tel_presentacion' 			=> $row->tel_presentacion,
+		    	'observaciones' 			=> $row->observaciones,
+		    	'beneficiario'	 			=> $row->beneficiario,	
+		    	'negativa_ficta'	 		=> $row->negativa_ficta,	
+		    	'afirmativa_ficta'	 		=> $row->afirmativa_ficta
 		    	);
 		}
 		return $res;
@@ -95,6 +99,8 @@ class Info_ts extends CI_Model {
 		    	'documento_oficial' 		=> $row->documento_oficial,
 		    	'documento_acreditacion' 	=> $row->documento_acreditacion,
 		    	'conjuncion'	 			=> $row->conjuncion,
+		    	'num_copias'				=> $row->num_copias,
+		    	'original_copia'			=> $row->original_copia
 		    	);
 		}
 		return $res;
