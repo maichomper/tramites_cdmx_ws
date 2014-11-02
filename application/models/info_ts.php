@@ -33,10 +33,12 @@ class Info_ts extends CI_Model {
 		    	'nvl_automatizacion' 		=> $row->nvl_automatizacion,
 		    	'formasolicitud' 			=> $row->formasolicitud,
 		    	'tel_presentacion' 			=> $row->tel_presentacion,
+		    	'ext_presentacion'	 		=> $row->ext_presentacion,
 		    	'observaciones' 			=> $row->observaciones,
 		    	'beneficiario'	 			=> $row->beneficiario,	
 		    	'negativa_ficta'	 		=> $row->negativa_ficta,	
-		    	'afirmativa_ficta'	 		=> $row->afirmativa_ficta
+		    	'afirmativa_ficta'	 		=> $row->afirmativa_ficta,
+		    	
 		    	);
 		}
 		return $res;
@@ -134,6 +136,7 @@ class Info_ts extends CI_Model {
 	public function getTSEnLinea(){
 		$this->db->where("nvl_automatizacion <> '1'");
 		$this->db->where('nvl_automatizacion IS NOT NULL');
+		$this->db->order_by('nombre_tramite');
 		$query = $this->db->get('v_info_ts');
 		$res = array();
 

@@ -20,7 +20,7 @@ class Info_juridica extends CI_Model {
 		{
 		    $res[$key] = array(
 		    	'id_tramite_servicio' 	=> $row->id_tramite_servicio,
-		    	'articulos '		 	=> $row->articulos,
+		    	'articulos'		 		=> $row->articulos,
 			    'descripcion' 			=> $row->descripcion,
 		    	);
 		}
