@@ -136,6 +136,7 @@ class Info_ts extends CI_Model {
 	public function getTSEnLinea(){
 		$this->db->where("nvl_automatizacion <> '1'");
 		$this->db->where('nvl_automatizacion IS NOT NULL');
+		$this->db->order_by('nombre_tramite');
 		$query = $this->db->get('v_info_ts');
 		$res = array();
 
