@@ -186,6 +186,26 @@ class Api extends REST_Controller
      * @param 
      * @return 
      */
+    function delegaciones_get(){
+        $this->load->model('delegacion');
+        
+        $delegacion = $this->delegacion->getDelegaciones();
+         
+        if($delegacion)
+        {
+            $this->response($delegacion, 200); // 200 being the HTTP response code
+        }
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // delegaciones_get
+
+    /**
+     * Descripción: Regresa formatos de un trámite/servicio 
+     * @param 
+     * @return 
+     */
     function area_atencion_get(){
         $this->load->model('area_atencion');
         if(!$this->get('id'))
@@ -207,11 +227,11 @@ class Api extends REST_Controller
     } // area_atencion_get
 
     /**
-     * Descripción: Regresa formatos de un trámite/servicio 
+     * Descripción: Regresa area de atencion por delegacion de un trámite/servicio 
      * @param 
      * @return 
      */
-    function area_atencion_delegacion_get(){
+    function area_atencion_tramite_delegacion_get(){
 
         $this->load->model('area_atencion');
         if(!$this->get('id') || !$this->get('del'))
@@ -219,7 +239,33 @@ class Api extends REST_Controller
            $this->response(NULL, 400);
         }
  
-        $area_atencion = $this->area_atencion->getAreaAtencionPorDelegacion( $this->get('id'), $this->get('del') );
+        $area_atencion = $this->area_atencion->getAreaAtencionPorTramiteDelegacion( $this->get('del'), $this->get('id') );
+         
+        if($area_atencion)
+        {
+            $this->response($area_atencion, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // area_atencion_delegacion_get
+
+    /**
+     * Descripción: Regresa area de atencion por delegacion 
+     * @param 
+     * @return 
+     */
+    function area_atencion_delegacion_get(){
+
+        $this->load->model('area_atencion');
+        if(!$this->get('del'))
+        {
+           $this->response(NULL, 400);
+        }
+ 
+        $area_atencion = $this->area_atencion->getAreaAtencionPorDelegacion( $this->get('del') );
          
         if($area_atencion)
         {
