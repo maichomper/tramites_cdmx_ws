@@ -60,11 +60,13 @@ class Area_atencion extends CI_Model {
 	 * @param integer $id_tramite_servicio, string $delegacion
 	 * @return 
 	 */
-	public function getAreaAtencionPorDelegacion($id, $delegacion){
+	public function getAreaAtencionPorTramiteDelegacion($delegacion, $id){
+	
 		$area_atencion_data = array(
 			'id_tramite_servicio' 	=> $id,
 			'delegacion'			=> $delegacion
 			);
+
 		$query = $this->db->get_where('v_areas_atencion', $area_atencion_data);
 		$res = array();
 
@@ -86,7 +88,42 @@ class Area_atencion extends CI_Model {
 		    	);
 		}
 		return $res;
-	}// getAreaAtencion
+	}// getAreaAtencionPorTramiteDelegacion
+
+	/**
+	 * Descripción: Busca areas de atención por trámite/servicio y delegación
+	 * @param integer $id_tramite_servicio, string $delegacion
+	 * @return 
+	 */
+	public function getAreaAtencionPorDelegacion($delegacion){
+	
+		$area_atencion_data = array(
+			'delegacion'			=> $delegacion
+			);
+
+		$this->db->order_by('nombre');
+		$query = $this->db->get_where('v_areas_atencion', $area_atencion_data);
+		$res = array();
+
+		foreach ($query->result() as $key=>$row)
+		{
+		    $res[$key] = array(
+		    	'id_tramite_servicio' 	=> $row->id_tramite_servicio,
+		    	'id_cat_ente' 			=> $row->id_cat_ente,
+		    	'nombre' 				=> $row->nombre,
+		    	'calle_numero' 			=> $row->calle_numero,
+		    	'delegacion' 			=> $row->delegacion,
+		    	'colonia' 				=> $row->colonia,
+		    	'cp' 					=> $row->cp,
+		    	'telefono_1' 			=> $row->telefono_1,
+		    	'ext_1' 				=> $row->ext_1,
+		    	'telefono_2' 			=> $row->telefono_2,
+		    	'ext_2' 				=> $row->ext_2,
+		    	'url_ubicacion'			=> $row->url_ubicacion,
+		    	);
+		}
+		return $res;
+	}// getAreaAtencionPorDelegacion
 
 	/**
 	 * Descripción: Busca oficinas por institución
