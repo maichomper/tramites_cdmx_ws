@@ -1,5 +1,5 @@
 {
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "dev-master"
+        "php-console/php-console": "3.*"
     }
 }

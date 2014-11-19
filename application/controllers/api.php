@@ -10,6 +10,8 @@ class Api extends REST_Controller
      */
     function info_tramite_get()
     {
+        //$connector = PhpConsole\Connector::getInstance();
+
         $this->load->model('info_ts');
         if(!$this->get('id'))
         {
