@@ -63,13 +63,25 @@ SELECT CatDoc.id_cat_documento, id_documento_ts, id_tramite_servicio, descripcio
 cat_documento CatDoc 
 INNER JOIN documento_ts Doc ON CatDoc.id_cat_documento = Doc.id_cat_documento;
 
--- VISTA AREAS DE ATENCIÓN
+-- VISTA AREAS DE ATENCIÓN POR TS
 CREATE VIEW v_areas_atencion
 AS
-SELECT id_tramite_servicio, id_cat_ente, nombre, calle_numero,Del.descripcion AS delegacion, Col.colonia AS colonia, cp, telefono_1, ext_1, telefono_2, ext_2, url_ubicacion  
+SELECT id_tramite_servicio, id_cat_ente, nombre, calle_numero,Del.descripcion AS delegacion, Col.colonia AS colonia, cp, telefono_1, ext_1, telefono_2, ext_2, url_ubicacion, dias, hora_inicio, hora_fin  
 FROM tramite_area_atencion
 INNER JOIN area_atencion_ts ON area_atencion_ts.id_area_atencion_ts=tramite_area_atencion.id_area_atencion_ts
 INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = area_atencion_ts.id_delegacion
-INNER JOIN cat_colonias_cp Col ON Col.id_colonia = area_atencion_ts.id_colonia;
+INNER JOIN cat_colonias_cp Col ON Col.id_colonia = area_atencion_ts.id_colonia
+INNER JOIN horario_atencion hor_aten ON hor_aten.id_area_atencion_ts = area_atencion_ts.id_area_atencion_ts
+WHERE area_atencion_ts.eliminado = 1;
+
+-- VISTA AREAS DE ATENCIÓN PARA DIRECTORIO
+CREATE VIEW v_areas_atencion_dir
+AS
+SELECT id_cat_ente, nombre, calle_numero,Del.descripcion AS delegacion, Col.colonia AS colonia, cp, telefono_1, ext_1, telefono_2, ext_2, url_ubicacion, dias, hora_inicio, hora_fin  
+FROM area_atencion_ts 
+INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = area_atencion_ts.id_delegacion
+INNER JOIN cat_colonias_cp Col ON Col.id_colonia = area_atencion_ts.id_colonia
+INNER JOIN horario_atencion hor_aten ON hor_aten.id_area_atencion_ts = area_atencion_ts.id_area_atencion_ts
+WHERE area_atencion_ts.eliminado = 1;
 
 

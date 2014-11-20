@@ -3,14 +3,13 @@ require(APPPATH.'/libraries/REST_Controller.php');
  
 class Api extends REST_Controller
 {
-    /**
-     * Descripción: Regresa información de trámite/servicio
+    /** 
+     * Descripción: Regresa información de trámite/servicio 
      * @param 
      * @return 
-     */
-    function info_tramite_get()
+     */ 
+    function info_tramite_get() 
     {
-        //$connector = PhpConsole\Connector::getInstance();
 
         $this->load->model('info_ts');
         if(!$this->get('id'))
