@@ -251,7 +251,33 @@ class Api extends REST_Controller
         {
             $this->response(NULL, 404);
         }
-    } // area_atencion_delegacion_get
+    } // area_atencion_tramite_delegacion_get
+
+    /**
+     * Descripción: Regresa area de atencion por delegacion de un trámite/servicio 
+     * @param 
+     * @return 
+     */
+    function horario_area_atencion_get(){
+
+        $this->load->model('area_atencion');
+        if(!$this->get('id'))
+        {
+           $this->response(NULL, 400);
+        }
+ 
+        $area_atencion = $this->area_atencion->getHorarioAreaAtencion( $this->get('id') );
+         
+        if($area_atencion)
+        {
+            $this->response($area_atencion, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // horario_area_atencion_get
 
     /**
      * Descripción: Regresa area de atencion por delegacion 
