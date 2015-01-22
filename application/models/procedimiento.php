@@ -7,7 +7,10 @@ class Procedimiento extends CI_Model {
 	}
 
 	public function getProcedimiento($id){
-		$query = $this->db->get_where('procedimiento_ts', array('id_tramite_servicio' => $id));
+		$this->db->where('eliminado', 1);
+		$this->db->where('id_tramite_servicio', $id);
+		$this->db->order_by('paso');
+		$query = $this->db->get('procedimiento_ts');
 		$res = array();
 
 		foreach ($query->result() as $key=>$row)

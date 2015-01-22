@@ -7,6 +7,7 @@ class Costo extends CI_Model {
 	}
 
 	public function getCosto($id){
+		$this->db->where('eliminado', 1);
 		$query = $this->db->get_where('concepto_costo_ts', array('id_tramite_servicio' => $id));
 		$res = array();
 
