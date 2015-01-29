@@ -92,7 +92,7 @@ SELECT area_atencion_ts.id_cat_ente,
      JOIN cat_delegacion del ON ((del.id_cat_delegacion = area_atencion_ts.id_delegacion)))
      JOIN cat_colonias_cp col ON ((col.id_colonia = area_atencion_ts.id_colonia)))
      JOIN horario_atencion hor_aten ON ((hor_aten.id_area_atencion_ts = area_atencion_ts.id_area_atencion_ts)))
-  WHERE (area_atencion_ts.eliminado = 1)
+  WHERE (area_atencion_ts.eliminado = 1 AND hor_aten.eliminado = 1)
   GROUP BY area_atencion_ts.id_cat_ente,
     area_atencion_ts.nombre,
     area_atencion_ts.calle_numero,
