@@ -203,7 +203,7 @@ class Area_atencion extends CI_Model {
 	public function getHorarioAreaAtencion($id_area_atencion_ts){
 	
 		$horario_data = array('id_area_atencion_ts' => $id_area_atencion_ts);
-
+		$this->db->where('eliminado', 1);
 		$query = $this->db->get_where('horario_atencion', $horario_data);
 		$res = array();
 		$horario = array(
