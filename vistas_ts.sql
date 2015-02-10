@@ -71,7 +71,7 @@ FROM tramite_area_atencion
 INNER JOIN area_atencion_ts ON area_atencion_ts.id_area_atencion_ts=tramite_area_atencion.id_area_atencion_ts
 INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = area_atencion_ts.id_delegacion
 INNER JOIN cat_colonias_cp Col ON Col.id_colonia = area_atencion_ts.id_colonia
-WHERE area_atencion_ts.eliminado = 1;
+WHERE tramite_area_atencion.eliminado = 1 AND area_atencion_ts.eliminado = 1;
 
 -- VISTA AREAS DE ATENCIÓN PARA DIRECTORIO
 CREATE VIEW v_areas_atencion_dir
