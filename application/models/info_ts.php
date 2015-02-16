@@ -89,7 +89,7 @@ class Info_ts extends CI_Model {
 	 * @return mixed array $res
 	 */
 	public function getRequisitos($id){
-		$this->db->order_by('id_requisito_ts');
+		$this->db->order_by('documento_acreditacion');
 		$query = $this->db->get_where('v_requisito_ts', array('id_tramite_servicio' => $id));
 		$res = array();
 
