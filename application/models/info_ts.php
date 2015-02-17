@@ -89,7 +89,8 @@ class Info_ts extends CI_Model {
 	 * @return mixed array $res
 	 */
 	public function getRequisitos($id){
-		$this->db->order_by('documento_acreditacion');
+		$this->db->order_by('documento_oficial', 'desc');
+		$this->db->order_by('id_requisito_ts');		
 		$query = $this->db->get_where('v_requisito_ts', array('id_tramite_servicio' => $id));
 		$res = array();
 
@@ -115,6 +116,7 @@ class Info_ts extends CI_Model {
 	 * @return mixed array $res
 	 */
 	public function getRequisitosEsp($id){
+		$this->db->order_by('id_requisito_especifico_ts');	
 		$query = $this->db->get_where('v_requisito_esp_ts', array('id_tramite_servicio' => $id));
 		$res = array();
 
