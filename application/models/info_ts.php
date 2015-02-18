@@ -23,6 +23,7 @@ class Info_ts extends CI_Model {
 		    	'descripcion' 				=> $row->descripcion_ts,
 		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
 		    	'ente'	 					=> $row->ente,
+		    	'ente_padre'	 			=> $row->ente_padre,
 		    	'tiempo_respuesta'	 		=> $row->tiempo_respuesta,
 		    	'beneficiario'	 			=> $row->beneficiario,
 		    	'id_materia'				=> $row->id_cat_materia,
