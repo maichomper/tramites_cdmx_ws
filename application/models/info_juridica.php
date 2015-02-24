@@ -12,6 +12,7 @@ class Info_juridica extends CI_Model {
 		$this->db->join('ley_ts', 'cat_ley.id_cat_ley  = ley_ts.id_cat_ley ');
 		$this->db->where('eliminado', 1);
 		$this->db->where('id_tramite_servicio', $id);
+		$this->db->order_by('cat_ley');
 
 		$query = $this->db->get();
 		$res = array();
