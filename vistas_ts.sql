@@ -61,7 +61,8 @@ CREATE VIEW v_documento_ts
 AS
 SELECT CatDoc.id_cat_documento, id_documento_ts, id_tramite_servicio, descripcion, vigencia FROM 
 cat_documento CatDoc 
-INNER JOIN documento_ts Doc ON CatDoc.id_cat_documento = Doc.id_cat_documento;
+INNER JOIN documento_ts Doc ON CatDoc.id_cat_documento = Doc.id_cat_documento
+WHERE doc.eliminado = 1;
 
 -- VISTA AREAS DE ATENCIÓN POR TS
 CREATE VIEW v_areas_atencion
