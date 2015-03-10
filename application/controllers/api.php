@@ -106,6 +106,35 @@ class Api extends REST_Controller
         }
     } // ts_en_linea_get
 
+    /** 
+     * Descripción: Regresa información de trámite/servicio 
+     * @param 
+     * @return 
+     */ 
+    function buscar_get() 
+    {
+
+        $this->load->model('info_ts');
+        if(!$this->get('term'))
+        {
+            $this->response(NULL, 400);
+        }
+        
+        $term = str_replace('---', ',',urldecode($this->get('term') ));
+        $tramites = $this->info_ts->busquedaTS( $term );
+
+         
+        if($tramites)
+        {
+            $this->response($tramites, 200); // 200 being the HTTP response code
+        }
+ 
+        else
+        {
+            $this->response(NULL, 404);
+        }
+    } // buscar_get
+
     /**
      * Descripción: Regresa requisitos generales de trámites/servicios 
      * @param 

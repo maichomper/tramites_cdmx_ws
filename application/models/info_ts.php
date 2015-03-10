@@ -152,5 +152,48 @@ class Info_ts extends CI_Model {
 		    	);
 		}
 		return $res;
-	}// getRequisitosEsp
+	}// getTSEnLinea
+
+	/**
+	 * Descripción: Busca una palabra dentro de un trámite/servicio y regresa las ocurrencias. 
+	 * @param 
+	 * @return mixed array $res
+	 */
+	public function busquedaTS($palabras){
+		// $this->db->like('nombre_tramite', $palabras); 
+		// $this->db->order_by('nombre_tramite');
+		// $query = $this->db->get('v_info_ts');
+
+		$palabras_acentos = $this->reemplazarLetrasEspecialesPorAcentos($palabras);
+		$query = $this->db->query('set client_encoding=UTF8');
+
+		$query = $this->db->query("
+			SELECT id_tramite_servicio, nombre_tramite 
+			FROM v_info_ts 
+			WHERE LOWER(nombre_tramite) LIKE '%".$palabras_acentos."%'");
+		$res = array();
+
+		foreach ($query->result() as $key=>$row)
+		{
+		    $res[$key] = array(
+		    	'nombre_tramite' 			=> $row->nombre_tramite,
+		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio
+		    	);
+		}
+		return $res;
+	}// busquedaTS
+
+	/**
+	 * Descripción: Reemplaza palabras claves (_a_) por (á) 
+	 * @param string $str
+	 * @return string
+	 */
+	private function reemplazarLetrasEspecialesPorAcentos($str) {
+		$str = trim($str);
+
+		$a = array('_A_','_E_','_I_','_O_','_U_','_a_','_e_','_i_','_o_','_u_');
+		$b = array('Á','É','Í','Ó','Ú','á','é','í','ó','ú');
+	  	
+	  	return str_replace($a,$b,$str);
+	}// formateaMateria
 }

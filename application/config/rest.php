@@ -147,7 +147,7 @@ $config['auth_library_function'] = '';
 |	array('admin' => '1234')
 |
 */
-$config['rest_valid_logins'] = array('admin_ts' => '@dm1n_TS_123');
+$config['rest_valid_logins'] = array('admin_ts' => 'Adm1n_TS_123');
 
 /*
 |--------------------------------------------------------------------------
