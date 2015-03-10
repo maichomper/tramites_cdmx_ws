@@ -1,7 +1,7 @@
 -- VISTA INFO TRÁMITES Y SERVICIOS
 CREATE VIEW v_info_ts
 AS
-SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.descripcion AS descripcion_ts, TS.id_tramite_servicio, CatEnte.descripcion AS ente, TS.tiempo_respuesta, TS.beneficiario, CatMat.id_cat_materia, CatMat.descripcion AS materia, TS.is_tramite, CatMat.tramite_servicio, url_nvl_automatizacion, nvl_automatizacion, formasolicitud, tel_presentacion, ext_presentacion, observaciones, negativa_ficta, afirmativa_ficta
+SELECT CatTS.id_cat_tramite_servicio, CatTS.descripcion AS nombre_tramite, TS.descripcion AS descripcion_ts, TS.id_tramite_servicio, CatEnte.descripcion AS ente, CatEnte.ente_padre, TS.tiempo_respuesta, TS.beneficiario, CatMat.id_cat_materia, CatMat.descripcion AS materia, TS.is_tramite, CatMat.tramite_servicio, url_nvl_automatizacion, nvl_automatizacion, formasolicitud, tel_presentacion, ext_presentacion, observaciones, negativa_ficta, afirmativa_ficta
 FROM cat_tramite_servicio CatTS 
 INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CatTS.id_cat_tramite_servicio
 INNER JOIN cat_ente CatEnte ON CatEnte.id_cat_ente = TS.id_ente_responsable
@@ -61,7 +61,8 @@ CREATE VIEW v_documento_ts
 AS
 SELECT CatDoc.id_cat_documento, id_documento_ts, id_tramite_servicio, descripcion, vigencia FROM 
 cat_documento CatDoc 
-INNER JOIN documento_ts Doc ON CatDoc.id_cat_documento = Doc.id_cat_documento;
+INNER JOIN documento_ts Doc ON CatDoc.id_cat_documento = Doc.id_cat_documento
+WHERE doc.eliminado = 1;
 
 -- VISTA AREAS DE ATENCIÓN POR TS
 CREATE VIEW v_areas_atencion
@@ -71,7 +72,7 @@ FROM tramite_area_atencion
 INNER JOIN area_atencion_ts ON area_atencion_ts.id_area_atencion_ts=tramite_area_atencion.id_area_atencion_ts
 INNER JOIN cat_delegacion Del ON Del.id_cat_delegacion = area_atencion_ts.id_delegacion
 INNER JOIN cat_colonias_cp Col ON Col.id_colonia = area_atencion_ts.id_colonia
-WHERE area_atencion_ts.eliminado = 1;
+WHERE tramite_area_atencion.eliminado = 1 AND area_atencion_ts.eliminado = 1;
 
 -- VISTA AREAS DE ATENCIÓN PARA DIRECTORIO
 CREATE VIEW v_areas_atencion_dir
@@ -92,7 +93,7 @@ SELECT area_atencion_ts.id_cat_ente,
      JOIN cat_delegacion del ON ((del.id_cat_delegacion = area_atencion_ts.id_delegacion)))
      JOIN cat_colonias_cp col ON ((col.id_colonia = area_atencion_ts.id_colonia)))
      JOIN horario_atencion hor_aten ON ((hor_aten.id_area_atencion_ts = area_atencion_ts.id_area_atencion_ts)))
-  WHERE (area_atencion_ts.eliminado = 1)
+  WHERE (area_atencion_ts.eliminado = 1 AND hor_aten.eliminado = 1)
   GROUP BY area_atencion_ts.id_cat_ente,
     area_atencion_ts.nombre,
     area_atencion_ts.calle_numero,

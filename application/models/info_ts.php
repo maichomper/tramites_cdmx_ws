@@ -23,6 +23,7 @@ class Info_ts extends CI_Model {
 		    	'descripcion' 				=> $row->descripcion_ts,
 		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio,
 		    	'ente'	 					=> $row->ente,
+		    	'ente_padre'	 			=> $row->ente_padre,
 		    	'tiempo_respuesta'	 		=> $row->tiempo_respuesta,
 		    	'beneficiario'	 			=> $row->beneficiario,
 		    	'id_materia'				=> $row->id_cat_materia,
@@ -89,6 +90,8 @@ class Info_ts extends CI_Model {
 	 * @return mixed array $res
 	 */
 	public function getRequisitos($id){
+		$this->db->order_by('documento_oficial', 'desc');
+		$this->db->order_by('id_requisito_ts');		
 		$query = $this->db->get_where('v_requisito_ts', array('id_tramite_servicio' => $id));
 		$res = array();
 
@@ -114,6 +117,7 @@ class Info_ts extends CI_Model {
 	 * @return mixed array $res
 	 */
 	public function getRequisitosEsp($id){
+		$this->db->order_by('id_requisito_especifico_ts');	
 		$query = $this->db->get_where('v_requisito_esp_ts', array('id_tramite_servicio' => $id));
 		$res = array();
 
@@ -134,9 +138,8 @@ class Info_ts extends CI_Model {
 	 * @return mixed array $res
 	 */
 	public function getTSEnLinea(){
-		$this->db->where("nvl_automatizacion <> '0'");
-		$this->db->where('nvl_automatizacion IS NOT NULL');
-		$this->db->where("nvl_automatizacion <> ''");
+		$this->db->where("url_nvl_automatizacion <> '1'");
+		$this->db->where('url_nvl_automatizacion IS NOT NULL');
 		$this->db->order_by('nombre_tramite');
 		$query = $this->db->get('v_info_ts');
 		$res = array();
@@ -149,5 +152,48 @@ class Info_ts extends CI_Model {
 		    	);
 		}
 		return $res;
-	}// getRequisitosEsp
+	}// getTSEnLinea
+
+	/**
+	 * Descripción: Busca una palabra dentro de un trámite/servicio y regresa las ocurrencias. 
+	 * @param 
+	 * @return mixed array $res
+	 */
+	public function busquedaTS($palabras){
+		// $this->db->like('nombre_tramite', $palabras); 
+		// $this->db->order_by('nombre_tramite');
+		// $query = $this->db->get('v_info_ts');
+
+		$palabras_acentos = $this->reemplazarLetrasEspecialesPorAcentos($palabras);
+		$query = $this->db->query('set client_encoding=UTF8');
+
+		$query = $this->db->query("
+			SELECT id_tramite_servicio, nombre_tramite 
+			FROM v_info_ts 
+			WHERE LOWER(nombre_tramite) LIKE '%".$palabras_acentos."%'");
+		$res = array();
+
+		foreach ($query->result() as $key=>$row)
+		{
+		    $res[$key] = array(
+		    	'nombre_tramite' 			=> $row->nombre_tramite,
+		    	'id_tramite_servicio' 		=> $row->id_tramite_servicio
+		    	);
+		}
+		return $res;
+	}// busquedaTS
+
+	/**
+	 * Descripción: Reemplaza palabras claves (_a_) por (á) 
+	 * @param string $str
+	 * @return string
+	 */
+	private function reemplazarLetrasEspecialesPorAcentos($str) {
+		$str = trim($str);
+
+		$a = array('_A_','_E_','_I_','_O_','_U_','_a_','_e_','_i_','_o_','_u_');
+		$b = array('Á','É','Í','Ó','Ú','á','é','í','ó','ú');
+	  	
+	  	return str_replace($a,$b,$str);
+	}// formateaMateria
 }
