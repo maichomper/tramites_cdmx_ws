@@ -202,8 +202,8 @@ class Info_ts extends CI_Model {
 	  	
 	  	$str = str_replace($a,$b,$str);
 	  	$str = str_replace('~','/',$str);
-	  	$str = str_replace('<', '(', $str);
-	  	$str = str_replace('>', ')', $str);
+	  	$str = str_replace('000', '(', $str);
+	  	$str = str_replace('_', ')', $str);
 	  	return str_replace('---', ' ', $str);
 	}// formateaMateria
 }
