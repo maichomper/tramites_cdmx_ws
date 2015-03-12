@@ -9,14 +9,14 @@ class Area_atencion extends CI_Model {
 	/**
 	 * Descripción: Busca areas de atención por trámite/servicio
 	 * @param integer $id_tramite_servicio
-	 * @return 
+	 * @return
 	 */
 	public function getAreaAtencion($id){
 		$query = $this->db->get_where('v_areas_atencion', array('id_tramite_servicio' => $id));
 		$res = array();
-		
+
 		$horario = array(
-			'1'=>'00:00',		
+			'1'=>'00:00',
 			'2'=>'00:30',
 			'3'=>'01:00',
 			'4'=>'01:30',
@@ -92,7 +92,7 @@ class Area_atencion extends CI_Model {
 	/**
 	 * Descripción: Busca delegaciones de areas de atención por trámite/servicio
 	 * @param integer $id_tramite_servicio
-	 * @return 
+	 * @return
 	 */
 	public function getDelegacionAreaAtencion($id){
 		$this->db->select('delegacion');
@@ -112,10 +112,10 @@ class Area_atencion extends CI_Model {
 	/**
 	 * Descripción: Busca areas de atención por trámite/servicio y delegación
 	 * @param integer $id_tramite_servicio, string $delegacion
-	 * @return 
+	 * @return
 	 */
 	public function getAreaAtencionPorTramiteDelegacion($delegacion, $id){
-	
+
 		$area_atencion_data = array(
 			'id_tramite_servicio' 	=> $id,
 			'delegacion'			=> $delegacion
@@ -124,7 +124,7 @@ class Area_atencion extends CI_Model {
 		$query = $this->db->get_where('v_areas_atencion', $area_atencion_data);
 		$res = array();
 		$horario = array(
-			'1'=>'00:00',		
+			'1'=>'00:00',
 			'2'=>'00:30',
 			'3'=>'01:00',
 			'4'=>'01:30',
@@ -201,13 +201,13 @@ class Area_atencion extends CI_Model {
 	 * @return mixed $horarios
 	 */
 	public function getHorarioAreaAtencion($id_area_atencion_ts){
-	
+
 		$horario_data = array('id_area_atencion_ts' => $id_area_atencion_ts);
 		$this->db->where('eliminado', 1);
 		$query = $this->db->get_where('horario_atencion', $horario_data);
 		$res = array();
 		$horario = array(
-			'1'=>'00:00',		
+			'1'=>'00:00',
 			'2'=>'00:30',
 			'3'=>'01:00',
 			'4'=>'01:30',
@@ -259,12 +259,15 @@ class Area_atencion extends CI_Model {
 
 		foreach ($query->result() as $key=>$row)
 		{
-		    $res[$key] = array(
-		    	'id_area_atencion_ts' 	=> $row->id_area_atencion_ts,
-		    	'dias'					=> $row->dias,
-		    	'hora_inicio'			=> $horario[$row->hora_inicio],
-		    	'hora_fin'				=> $horario[$row->hora_fin],
-		    	);
+
+			if ( $row->hora_inicio == '' OR $row->hora_fin == '' ) continue;
+
+			$res[$key] = array(
+				'id_area_atencion_ts' 	=> $row->id_area_atencion_ts,
+				'dias'					=> $row->dias,
+				'hora_inicio'			=> $horario[$row->hora_inicio],
+				'hora_fin'				=> $horario[$row->hora_fin],
+			);
 		}
 		return $res;
 	}// getHorarioAreaAtencion
@@ -272,10 +275,10 @@ class Area_atencion extends CI_Model {
 	/**
 	 * Descripción: Busca areas de atención por trámite/servicio y delegación
 	 * @param integer $id_tramite_servicio, string $delegacion
-	 * @return 
+	 * @return
 	 */
 	public function getAreaAtencionPorDelegacion($delegacion){
-	
+
 		$area_atencion_data = array(
 			'delegacion'			=> $delegacion
 			);
@@ -283,7 +286,7 @@ class Area_atencion extends CI_Model {
 		$this->db->order_by('nombre');
 		$query = $this->db->get_where('v_areas_atencion_dir', $area_atencion_data);
 		$res = array();
-		
+
 		foreach ($query->result() as $key=>$row)
 		{
 		    $res[$key] = array(
@@ -307,7 +310,7 @@ class Area_atencion extends CI_Model {
 	/**
 	 * Descripción: Busca oficinas por institución
 	 * @param integer $id_institucion
-	 * @return 
+	 * @return
 	 */
 	public function getOficinas($id){
 		$query = $this->db->get_where('v_areas_atencion', array('id_cat_ente' => $id));
