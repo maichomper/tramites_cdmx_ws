@@ -138,7 +138,7 @@ class Info_ts extends CI_Model {
 	 * @return mixed array $res
 	 */
 	public function getTSEnLinea(){
-		$this->db->where("url_nvl_automatizacion <> '1'");
+		$this->db->where("nvl_automatizacion <> '1'");
 		$this->db->where('url_nvl_automatizacion IS NOT NULL');
 		$this->db->order_by('nombre_tramite');
 		$query = $this->db->get('v_info_ts');
@@ -160,20 +160,26 @@ class Info_ts extends CI_Model {
 	 * @return mixed array $res
 	 */
 	public function busquedaTS($palabras){
-		// $this->db->like('nombre_tramite', $palabras); 
-		// $this->db->order_by('nombre_tramite');
-		// $query = $this->db->get('v_info_ts');
 
 		$palabras_acentos = $this->reemplazarLetrasEspecialesPorAcentos($palabras);
+		$palabras_arr = explode(' ', $palabras_acentos);
+		//var_dump($palabras_arr);
 		$query = $this->db->query('set client_encoding=UTF8');
 
-		$query = $this->db->query("
+		$query = "
 			SELECT id_tramite_servicio, nombre_tramite 
 			FROM v_info_ts 
-			WHERE LOWER(nombre_tramite) LIKE '%".$palabras_acentos."%'");
-		$res = array();
+			WHERE";
 
-		foreach ($query->result() as $key=>$row)
+		foreach ($palabras_arr as $key => $palabra) {
+			if( $key > 0 ) $query .= " AND ";
+			$query .= " LOWER(nombre_tramite) LIKE '%".$palabra."%'";
+		}
+		//echo $query;
+
+		$exec_query = $this->db->query( $query );
+		$res = array();
+		foreach ($exec_query->result() as $key=>$row)
 		{
 		    $res[$key] = array(
 		    	'nombre_tramite' 			=> $row->nombre_tramite,
@@ -194,6 +200,10 @@ class Info_ts extends CI_Model {
 		$a = array('_A_','_E_','_I_','_O_','_U_','_a_','_e_','_i_','_o_','_u_');
 		$b = array('Á','É','Í','Ó','Ú','á','é','í','ó','ú');
 	  	
-	  	return str_replace($a,$b,$str);
+	  	$str = str_replace($a,$b,$str);
+	  	$str = str_replace('~','/',$str);
+	  	$str = str_replace('<', '(', $str);
+	  	$str = str_replace('>', ')', $str);
+	  	return str_replace('---', ' ', $str);
 	}// formateaMateria
 }

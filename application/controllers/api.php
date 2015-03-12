@@ -120,7 +120,7 @@ class Api extends REST_Controller
             $this->response(NULL, 400);
         }
         
-        $term = str_replace('---', ',',urldecode($this->get('term') ));
+        $term = urldecode($this->get('term'));
         $tramites = $this->info_ts->busquedaTS( $term );
 
          
