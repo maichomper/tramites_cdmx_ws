@@ -18,6 +18,16 @@ INNER JOIN cat_materia CatMat ON CatMat.id_cat_materia = CatTS.id_cat_materia
 WHERE id_cat_estatus = 16
 ORDER BY tramite_servicio;
 
+-- VISTA MATERIAS CON TRÁMITES/SERVICIOS PUBLICADOS
+CREATE VIEW v_materias_publicadas
+AS 
+SELECT M.id_cat_materia, M.descripcion AS materia FROM cat_materia M
+INNER JOIN cat_tramite_servicio CTS ON CTS.id_cat_materia = M.id_cat_materia
+INNER JOIN tramite_servicio TS ON TS.id_cat_tramite_servicio = CTS.id_cat_tramite_servicio
+WHERE TS.id_cat_estatus = 16
+GROUP BY M.id_cat_materia
+ORDER BY M.id_cat_materia
+
 -- VISTA TRAMITE SERVICIO POR ENTE
 CREATE VIEW v_ts_ente
 AS
