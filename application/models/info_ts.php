@@ -169,12 +169,23 @@ class Info_ts extends CI_Model {
 		$query = "
 			SELECT id_tramite_servicio, nombre_tramite 
 			FROM v_info_ts 
-			WHERE";
+			WHERE (";
 
 		foreach ($palabras_arr as $key => $palabra) {
 			if( $key > 0 ) $query .= " AND ";
 			$query .= " LOWER(nombre_tramite) LIKE '%".$palabra."%'";
 		}
+		$query .= ') OR (';
+		foreach ($palabras_arr as $key => $palabra) {
+			if( $key > 0 ) $query .= " AND ";
+			$query .= " LOWER(descripcion_ts) LIKE '%".$palabra."%'";
+		}
+		$query .= ') OR (';
+		foreach ($palabras_arr as $key => $palabra) {
+			if( $key > 0 ) $query .= " OR ";
+			$query .= " LOWER(palabra_clave) LIKE '%".$palabra."%'";
+		}
+		$query .= ')';
 		//echo $query;
 
 		$exec_query = $this->db->query( $query );

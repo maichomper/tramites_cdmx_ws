@@ -262,7 +262,7 @@ class Api extends REST_Controller
      * @return 
      */
     function area_atencion_tramite_delegacion_get(){
-
+        //header('Access-Control-Allow-Origin: *');
         $this->load->model('area_atencion');
         if(!$this->get('id') || !$this->get('del'))
         {
